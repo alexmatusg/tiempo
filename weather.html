@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather</title>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+      
+      <script>
+           $(document).ready(function(){
+             $('#send').click(function(){
+                $("form").submit(function(){
+                    var respuesta=$("#ciudad").val();
+                    $.get("http://api.openweathermap.org/data/2.5/weather?q="+respuesta+"&&appid=a1d149dacdfc34b225639a9cc971e15e",function(res){
+                        var tempmin="";
+                        tempmin +="<h2>Temperatura Minima</h2>";
+                        tempmin += "<h3>"+res.main.temp_min+"°K</h3>";
+                        $("#tempmin").html("<div>"+tempmin+"</div>");
+                        
+                        var tempmax="";
+                        tempmax +="<h2>Temperatura Máxima</h2>";
+                        tempmax += "<h3>"+res.main.temp_max+"°K</h3>";
+                        $("#tempmax").html("<div>"+tempmax+"</div>");
+
+                        var tempact="";
+                        tempact +="<h2>Temperatura Actual</h2>";
+                        tempact += "<h3>"+res.main.temp+"°K</h3>";
+                        $("#tempact").html("<div>"+tempact+"</div>");
+                    }, "json");
+                    return false;
+                    });
+                 });
+             });
+        </script>
+    </head>
+    <body>
+        <form action="post">
+            <label for="submit" name="Nombre" id="name">Nombre Ciudad</label>
+            <input type="text" name="city" id="ciudad">
+            <input type="submit" name="send" id="send">
+            <div id="tempmin"></div>
+            <div id="tempmax"></div>
+            <div id="tempact"></div>
+        </form>
+    </body>
+</html>
